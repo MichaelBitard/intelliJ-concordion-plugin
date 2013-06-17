@@ -1,6 +1,6 @@
 # IntelliJ Concordion plugin
 
-The purpose of this plugin is to provide some tools to intellij Idea in order to use concordion.
+The purpose of this plugin is to provide some tools to IntelliJ IDEA in order to use concordion.
 
 ## Concordion
 Concordion is an open source tool for writing automated acceptance tests in Java
