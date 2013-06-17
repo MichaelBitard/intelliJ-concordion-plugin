@@ -3,7 +3,9 @@ package com.bitard;
 import com.intellij.ide.highlighter.HtmlFileType;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiManager;
+import com.intellij.psi.PsiModifierList;
 import com.intellij.psi.impl.source.html.HtmlFileImpl;
 import com.intellij.psi.search.FileTypeIndex;
 import com.intellij.psi.search.GlobalSearchScope;
@@ -37,5 +39,20 @@ public class ConcordionUtil {
             }
         }
         return result != null ? result : Collections.<XmlAttribute>emptyList();
+    }
+
+    public static boolean isMethodBelongToAConcordionClass(PsiClass containingClass) {
+        if (containingClass != null) {
+            PsiModifierList modifierList = containingClass.getModifierList();
+            if (modifierList != null) {
+                if (modifierList.hasExplicitModifier("ConcordionRunner")) {
+                    return true;
+                } else {
+                    return false;
+                    //return isMethodBelongToAConcordionClass(containingClass.getContainingClass());
+                }
+            }
+        }
+        return false;
     }
 }

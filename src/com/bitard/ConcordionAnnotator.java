@@ -17,7 +17,7 @@ public class ConcordionAnnotator implements Annotator {
         if (element instanceof PsiMethod) {
             PsiMethod method = (PsiMethod) element;
             String value = method.getName();
-            if (method.getContainingClass().getModifierList().hasExplicitModifier("ConcordionRunner")) {
+            if (ConcordionUtil.isMethodBelongToAConcordionClass(method.getContainingClass())) {
                 Project project = element.getProject();
                 List<XmlAttribute> properties = ConcordionUtil.findProperties(project, value);
 
