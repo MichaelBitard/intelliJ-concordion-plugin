@@ -1,7 +1,8 @@
-import org.concordion.integration.junit4.ConcordionRunner;
-import org.junit.runner.RunWith;
+package concordion;
+import <error descr="Cannot resolve symbol 'org'">org</error>.concordion.integration.junit4.ConcordionRunner;
+import <error descr="Cannot resolve symbol 'org'">org</error>.junit.runner.RunWith;
 
-@RunWith(ConcordionRunner.class)
+@<error descr="Cannot resolve symbol 'RunWith'">RunWith</error>(<error descr="Cannot resolve symbol 'ConcordionRunner'">ConcordionRunner</error>.class)
 public class ConcordionTest {
     public void greetingFor() {
 

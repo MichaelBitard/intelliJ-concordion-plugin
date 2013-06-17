@@ -3,9 +3,7 @@ package com.bitard;
 import com.intellij.ide.highlighter.HtmlFileType;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.PsiModifierList;
+import com.intellij.psi.*;
 import com.intellij.psi.impl.source.html.HtmlFileImpl;
 import com.intellij.psi.search.FileTypeIndex;
 import com.intellij.psi.search.GlobalSearchScope;
@@ -28,7 +26,8 @@ public class ConcordionUtil {
                 Collection<XmlAttribute> properties = PsiTreeUtil.findChildrenOfType(htmlFile, XmlAttribute.class);
                 if (properties != null) {
                     for (XmlAttribute property : properties) {
-                        if (property.getValue().contains(key)) {
+                        String value = property.getValue();
+                        if (value != null && value.contains(key)) {
                             if (result == null) {
                                 result = new ArrayList<XmlAttribute>();
                             }
@@ -42,15 +41,33 @@ public class ConcordionUtil {
     }
 
     public static boolean isMethodBelongToAConcordionClass(PsiClass containingClass) {
+        return ClassHasAConcordionRunnerAnnotation(containingClass) || isThereAConcordionAnnotationInParent(containingClass);
+    }
+
+    private static boolean ClassHasAConcordionRunnerAnnotation(PsiClass containingClass) {
         if (containingClass != null) {
             PsiModifierList modifierList = containingClass.getModifierList();
             if (modifierList != null) {
-                if (modifierList.hasExplicitModifier("ConcordionRunner")) {
-                    return true;
-                } else {
-                    return false;
-                    //return isMethodBelongToAConcordionClass(containingClass.getContainingClass());
+                PsiAnnotation[] annotations = modifierList.getAnnotations();
+                for (PsiAnnotation annotation : annotations) {
+                    String qualifiedName = annotation.getQualifiedName();
+                    if (qualifiedName != null && qualifiedName.contains("RunWith")) {
+                        PsiAnnotationMemberValue value = annotations[0].getParameterList().getAttributes()[0].getValue();
+                        if (value != null && value.getText().contains("ConcordionRunner")) {
+                            return true;
+                        }
+                    }
                 }
+            }
+        }
+        return false;
+    }
+
+    private static boolean isThereAConcordionAnnotationInParent(PsiClass containingClass) {
+        final PsiClass[] superClasses = containingClass.getSupers();
+        for (PsiClass superClass : superClasses) {
+            if (ClassHasAConcordionRunnerAnnotation(superClass)) {
+                return true;
             }
         }
         return false;

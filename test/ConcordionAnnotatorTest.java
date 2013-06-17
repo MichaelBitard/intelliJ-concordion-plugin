@@ -6,8 +6,19 @@ public class ConcordionAnnotatorTest extends LightCodeInsightFixtureTestCase {
         return "../concordion/testData";
     }
 
-    public void testAnnotation() {
-        myFixture.configureByFiles("AClassicClass.java", "ConcordionTest.java", "concordion.html");
+    public void testAnnotation_notAConcordionClass() {
+        myFixture.configureByFiles("AClassicClass.java", "concordion.html");
         myFixture.checkHighlighting(false, false, true);
     }
+
+    public void testAnnotation_theMainConcordionClass() {
+        myFixture.configureByFiles("ConcordionTest.java", "concordion.html");
+        myFixture.checkHighlighting(false, false, true);
+    }
+
+    //FIXME IMPOSSIBLE TO TEST?
+    //public void testAnnotation_aChildOfAConcordionClass() {
+    //    myFixture.configureByFiles("AChildOfConcordionTest.java", "ConcordionTest.java", "concordion.html");
+    //    myFixture.checkHighlighting(false, false, true);
+    //}
 }
