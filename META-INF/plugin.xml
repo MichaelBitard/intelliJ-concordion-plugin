@@ -1,12 +1,12 @@
 <idea-plugin version="2">
   <id>com.bitard.concordion</id>
   <name>Concordion</name>
-  <version>1.0_alpha1</version>
+  <version>1.0</version>
   <vendor email="bitard.michael@gmail.com" url="">BitossEditions</vendor>
 
   <description><![CDATA[
-      Help you working with concordion.<br>
-      <small>First version juste flag your method as "unused"</small> <br />
+      Help you be faster concordion.<br>
+      <small>First version just flag your method as "unused"</small> <br />
       More coming!!
 
       ]]></description>

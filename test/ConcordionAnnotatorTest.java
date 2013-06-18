@@ -3,7 +3,7 @@ import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
 public class ConcordionAnnotatorTest extends LightCodeInsightFixtureTestCase {
     @Override
     protected String getTestDataPath() {
-        return "../concordion/testData";
+        return "../intelliJ-concordion-plugin/testData";
     }
 
     public void testAnnotation_notAConcordionClass() {
