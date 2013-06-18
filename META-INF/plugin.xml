@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>com.bitard.concordion</id>
     <name>Concordion</name>
-    <version>1.0_alpha1</version>
+    <version>1.0_alpha2</version>
     <vendor email="bitard.michael@gmail.com" url="">BitossEditions</vendor>
 
     <description><![CDATA[
