@@ -16,14 +16,17 @@ public class ConcordionAnnotator implements Annotator {
     public void annotate(@NotNull final PsiElement element, @NotNull AnnotationHolder holder) {
         if (element instanceof PsiMethod) {
             PsiMethod method = (PsiMethod) element;
-            String value = method.getName();
-            if (ConcordionUtil.isMethodBelongToAConcordionClass(method.getContainingClass())) {
-                Project project = element.getProject();
-                List<XmlAttribute> properties = ConcordionUtil.findProperties(project, value);
+            if (method.getModifierList().hasExplicitModifier("public") && !method.getModifierList().hasExplicitModifier("static")) {
 
-                if (properties.size() == 0) {
-                    TextRange range = new TextRange(element.getTextRange().getStartOffset(), element.getTextRange().getEndOffset());
-                    holder.createErrorAnnotation(range, "Unused method in concordion files");
+                String value = method.getName();
+                if (ConcordionUtil.isMethodBelongToAConcordionClass(method.getContainingClass())) {
+                    Project project = element.getProject();
+                    List<XmlAttribute> properties = ConcordionUtil.findProperties(project, value);
+
+                    if (properties.size() == 0) {
+                        TextRange range = new TextRange(element.getTextRange().getStartOffset(), element.getTextRange().getEndOffset());
+                        holder.createErrorAnnotation(range, "Unused method in concordion files");
+                    }
                 }
             }
         }

@@ -1,45 +1,49 @@
 <idea-plugin version="2">
-  <id>com.bitard.concordion</id>
-  <name>Concordion</name>
-  <version>1.0_alpha1</version>
-  <vendor email="bitard.michael@gmail.com" url="">BitossEditions</vendor>
+    <id>com.bitard.concordion</id>
+    <name>Concordion</name>
+    <version>1.0_alpha1</version>
+    <vendor email="bitard.michael@gmail.com" url="">BitossEditions</vendor>
 
-  <description><![CDATA[
-      Help you be faster concordion.<br>
+    <description><![CDATA[
+      Help you use concordion faster.<br>
       <small>First version just flag your method as "unused"</small> <br />
       More coming!!
 
       ]]></description>
 
-  <change-notes><![CDATA[
-      1.0 : Flag java method unused in concordion html files
+    <change-notes><![CDATA[
+      1.0 : Flag java method unused in concordion html files<br />
+      1.0_alpha2 : <ul>
+      <li>dont check static methods</li>
+      <li>dont check non public methods</li>
+      </ul>
       ]]>
-  </change-notes>
+    </change-notes>
 
-  <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Build+Number+Ranges for description -->
-  <idea-version since-build="107.105"/>
+    <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Build+Number+Ranges for description -->
+    <idea-version since-build="107.105"/>
 
-  <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
-       on how to target different products -->
-  <!-- uncomment to enable plugin in all products
-  <depends>com.intellij.modules.lang</depends>
-  -->
+    <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
 
-  <application-components>
+    <application-components>
 
-    <!-- Add your application components here -->
-  </application-components>
+        <!-- Add your application components here -->
+    </application-components>
 
-  <project-components>
+    <project-components>
 
-    <!-- Add your project components here -->
-  </project-components>
+        <!-- Add your project components here -->
+    </project-components>
 
-  <actions>
-    <!-- Add your actions here -->
-  </actions>
+    <actions>
+        <!-- Add your actions here -->
+    </actions>
 
-  <extensions defaultExtensionNs="com.intellij">
-      <annotator language="JAVA" implementationClass="com.bitard.ConcordionAnnotator"/>
-  </extensions>
+    <extensions defaultExtensionNs="com.intellij">
+        <annotator language="JAVA" implementationClass="com.bitard.ConcordionAnnotator"/>
+    </extensions>
 </idea-plugin>

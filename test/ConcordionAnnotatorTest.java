@@ -16,6 +16,11 @@ public class ConcordionAnnotatorTest extends LightCodeInsightFixtureTestCase {
         myFixture.checkHighlighting(false, false, true);
     }
 
+    public void testAnnotation_doNotCheckPrivate() {
+        myFixture.configureByFiles("ConcordionWithPrivateTest.java", "concordion.html");
+        myFixture.checkHighlighting(false, false, true);
+    }
+
     //FIXME IMPOSSIBLE TO TEST?
     //public void testAnnotation_aChildOfAConcordionClass() {
     //    myFixture.configureByFiles("AChildOfConcordionTest.java", "ConcordionTest.java", "concordion.html");
