@@ -3,7 +3,11 @@ package com.bitard;
 import com.intellij.ide.highlighter.HtmlFileType;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.*;
+import com.intellij.psi.PsiAnnotation;
+import com.intellij.psi.PsiAnnotationMemberValue;
+import com.intellij.psi.PsiClass;
+import com.intellij.psi.PsiManager;
+import com.intellij.psi.PsiModifierList;
 import com.intellij.psi.impl.source.html.HtmlFileImpl;
 import com.intellij.psi.search.FileTypeIndex;
 import com.intellij.psi.search.GlobalSearchScope;
@@ -68,6 +72,9 @@ public class ConcordionUtil {
         for (PsiClass superClass : superClasses) {
             if (ClassHasAConcordionRunnerAnnotation(superClass)) {
                 return true;
+            }
+            if (superClass.getSupers().length > 0) {
+                return isThereAConcordionAnnotationInParent(superClass);
             }
         }
         return false;
