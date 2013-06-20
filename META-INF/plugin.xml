@@ -45,5 +45,6 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <annotator language="JAVA" implementationClass="com.bitard.ConcordionAnnotator"/>
+        <psi.referenceContributor implementation="com.bitard.referenceContributor.ConcordionReferenceContributor"/>
     </extensions>
 </idea-plugin>

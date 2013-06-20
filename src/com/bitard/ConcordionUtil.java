@@ -1,13 +1,10 @@
 package com.bitard;
 
+import com.bitard.psi.ConcordionMethodInHtml;
 import com.intellij.ide.highlighter.HtmlFileType;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiAnnotation;
-import com.intellij.psi.PsiAnnotationMemberValue;
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.PsiModifierList;
+import com.intellij.psi.*;
 import com.intellij.psi.impl.source.html.HtmlFileImpl;
 import com.intellij.psi.search.FileTypeIndex;
 import com.intellij.psi.search.GlobalSearchScope;
@@ -21,8 +18,26 @@ import java.util.Collections;
 import java.util.List;
 
 public class ConcordionUtil {
-    public static List<XmlAttribute> findProperties(Project project, String key) {
-        List<XmlAttribute> result = null;
+
+    public static List<ConcordionMethodInHtml> findProperties(Project project) {
+        List<ConcordionMethodInHtml> result = new ArrayList<ConcordionMethodInHtml>();
+        Collection<VirtualFile> virtualFiles = FileBasedIndex.getInstance().getContainingFiles(FileTypeIndex.NAME, HtmlFileType.INSTANCE, GlobalSearchScope.allScope(project));
+        for (VirtualFile virtualFile : virtualFiles) {
+            HtmlFileImpl htmlFile = (HtmlFileImpl) PsiManager.getInstance(project).findFile(virtualFile);
+            if (htmlFile != null) {
+                XmlAttribute[] properties = PsiTreeUtil.getChildrenOfType(htmlFile, XmlAttribute.class);
+                if (properties != null) {
+                    for (XmlAttribute property : properties) {
+                        result.add(new ConcordionMethodInHtml(property));
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    public static List<ConcordionMethodInHtml> findProperties(Project project, String key) {
+        List<ConcordionMethodInHtml> result = null;
         Collection<VirtualFile> virtualFiles = FileBasedIndex.getInstance().getContainingFiles(FileTypeIndex.NAME, HtmlFileType.INSTANCE, GlobalSearchScope.allScope(project));
         for (VirtualFile virtualFile : virtualFiles) {
             HtmlFileImpl htmlFile = (HtmlFileImpl) PsiManager.getInstance(project).findFile(virtualFile);
@@ -33,15 +48,15 @@ public class ConcordionUtil {
                         String value = property.getValue();
                         if (value != null && value.contains(key)) {
                             if (result == null) {
-                                result = new ArrayList<XmlAttribute>();
+                                result = new ArrayList<ConcordionMethodInHtml>();
                             }
-                            result.add(property);
+                            result.add(new ConcordionMethodInHtml(property));
                         }
                     }
                 }
             }
         }
-        return result != null ? result : Collections.<XmlAttribute>emptyList();
+        return result != null ? result : Collections.<ConcordionMethodInHtml>emptyList();
     }
 
     public static boolean isMethodBelongToAConcordionClass(PsiClass containingClass) {
